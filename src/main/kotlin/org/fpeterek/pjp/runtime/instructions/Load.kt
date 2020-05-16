@@ -1,3 +1,3 @@
 package org.fpeterek.pjp.runtime.instructions
 
-class Load(variable: String) : Instruction()
+class Load(val variable: String) : Instruction()

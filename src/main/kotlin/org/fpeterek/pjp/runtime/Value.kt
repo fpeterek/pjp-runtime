@@ -62,6 +62,24 @@ class Value(val value: Any, val type: DataType) {
     infix fun and(other: Value) = Value(bool && other.bool, DataType.Bool)
     infix fun or(other: Value) = Value(bool || other.bool, DataType.Bool)
 
-    operator fun compareTo(other: Value) = 0
+    operator fun compareTo(other: Value) = when {
+        type == DataType.Int && other.type == DataType.Int -> int.compareTo(other.int)
+        type == DataType.String -> string.compareTo(other.string)
+        type == DataType.Bool -> bool.compareTo(other.bool)
+        else -> float.compareTo(other.float)
+    }
+
+    infix fun gt(other: Value) = Value(this > other, DataType.Bool)
+    infix fun lt(other: Value) = Value(this < other, DataType.Bool)
+    infix fun eq(other: Value) = Value(this == other, DataType.Bool)
+
+    operator fun not() = Value(!bool, DataType.Bool)
+
+    override fun toString() = when (type) {
+        DataType.Bool   -> bool.toString()
+        DataType.String -> string
+        DataType.Int    -> int.toString()
+        DataType.Float  -> float.toString()
+    }
 
 }

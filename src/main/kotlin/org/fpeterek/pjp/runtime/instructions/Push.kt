@@ -1,3 +1,5 @@
 package org.fpeterek.pjp.runtime.instructions
 
-data class Push(val value: String) : Instruction()
+import org.fpeterek.pjp.runtime.Value
+
+data class Push(val value: Value) : Instruction()

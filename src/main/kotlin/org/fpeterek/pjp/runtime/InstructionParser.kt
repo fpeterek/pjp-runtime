@@ -4,6 +4,15 @@ import org.fpeterek.pjp.runtime.instructions.*
 
 object InstructionParser {
 
+    private fun parseValueFromArg(type: Char, value: String) = when (type.toUpperCase()) {
+        'I' -> Value(value.toInt(), DataType.Int)
+        'B' -> Value(value.toBoolean(), DataType.Bool)
+        'S' -> Value(value, DataType.String)
+        'F' -> Value(value.toFloat(), DataType.Float)
+        else -> throw Exception("Invalid type")
+    }
+
+    private fun parseValue(value: String) = parseValueFromArg(value.first(), value.drop(1))
 
     private fun parseSplit(instruction: List<String>) = when (instruction.firstOrNull()) {
         null, "" -> null
@@ -22,7 +31,7 @@ object InstructionParser {
         "not"    -> Not()
         "pop"    -> Pop()
 
-        "push"   -> Push(instruction.last())
+        "push"   -> Push(parseValue(instruction.last()))
         "load"   -> Load(instruction.last())
         "save"   -> Save(instruction.last())
         "jmp"    -> Jmp(instruction.last().toInt())
@@ -33,7 +42,7 @@ object InstructionParser {
         else -> throw Exception("Invalid instruction '${instruction.first()}'")
     }
 
-    private fun parse(str: String) = parseSplit(str.split(" "))
+    private fun parse(str: String) = parseSplit(str.split(" ", limit=2))
 
     fun parse(instructions: List<String>) = instructions.mapNotNull { parse(it) }
 
