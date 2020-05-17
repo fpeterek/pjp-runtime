@@ -5,11 +5,11 @@ class Value(val value: Any, val type: DataType) {
     val int: Int
         get() = value as Int
 
-    val float: Float
+    val float: Double
         get() = if (type == DataType.Float) {
-            value as Float
+            value as Double
         } else {
-            int.toFloat()
+            int.toDouble()
         }
 
     val string: String

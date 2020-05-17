@@ -1,5 +1,6 @@
 package org.fpeterek.pjp.runtime
 
+import org.apache.commons.text.StringEscapeUtils
 import org.fpeterek.pjp.runtime.instructions.*
 
 object InstructionParser {
@@ -7,7 +8,7 @@ object InstructionParser {
     private fun parseValueFromArg(type: Char, value: String) = when (type.toUpperCase()) {
         'I' -> Value(value.toInt(), DataType.Int)
         'B' -> Value(value.toBoolean(), DataType.Bool)
-        'S' -> Value(value, DataType.String)
+        'S' -> Value(StringEscapeUtils.unescapeJava(value), DataType.String)
         'F' -> Value(value.toFloat(), DataType.Float)
         else -> throw Exception("Invalid type")
     }

@@ -83,8 +83,6 @@ class Runtime {
         while (pointer < instructions.size) {
 
             val instruction = instructions[pointer]
-            // val isJmp = instruction is Jmp || instruction is FJmp
-            //println(instruction.javaClass)
             execute(instruction)
             ++pointer
 
